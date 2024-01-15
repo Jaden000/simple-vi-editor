@@ -111,6 +111,13 @@ curses.h 라이브러리는 Windows에서 `-pdcurses`로, MacOs와 Linux에서 `
 </br>
 </br>
 
+-------------
+### 동작
+![2024-01-1516 47 42-ezgif com-video-to-gif-converter](https://github.com/Jaden000/simple-vi-editor/assets/84056591/75ea0b78-a8c2-4d4c-b4af-3b7722d78ce6)
+
+
+</br>
+</br>
 
 -----------
 
