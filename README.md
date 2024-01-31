@@ -37,6 +37,13 @@ vi에 있는 기능 중 다음의 일부 기능만을 구현한다.
 </br>
 </br>
 
+-------------
+### 동작
+![2024-01-1516 47 42-ezgif com-video-to-gif-converter](https://github.com/Jaden000/simple-vi-editor/assets/84056591/75ea0b78-a8c2-4d4c-b4af-3b7722d78ce6)
+
+
+</br>
+</br>
 
 ---------------------
 
@@ -48,18 +55,18 @@ vi에 있는 기능 중 다음의 일부 기능만을 구현한다.
 - main (일부 발췌)
 ```
 if(fo != NULL){
-	total_linenum = 1;
-	char buffer[1024] = {0, };
-	while(feof(fo) == 0){
-		int count = fread(buffer, 1, sizeof(buffer), fo);
-		if(count > 0){
-			for(int i = 0; i < strlen(buffer); i++) {
-				head = InsertAtHead(head, buffer[i]);
-				if(buffer[i] == '\n') total_linenum++;
-			}
-			memset(buffer, 0, sizeof(buffer));
-		}
-	}
+    total_linenum = 1;
+    char buffer[1024] = {0, };
+    while(feof(fo) == 0){
+        int count = fread(buffer, 1, sizeof(buffer), fo);
+        if(count > 0){
+            for(int i = 0; i < strlen(buffer); i++) {
+                head = InsertAtHead(head, buffer[i]);
+                if(buffer[i] == '\n') total_linenum++;
+            }
+            memset(buffer, 0, sizeof(buffer));
+        }
+    }
 }
 fclose(fo);
 ```
@@ -107,14 +114,6 @@ curses.h 라이브러리는 Windows에서 `-pdcurses`로, MacOs와 Linux에서 `
     #include "linkedlist.h"
 #endif
 ```
-
-</br>
-</br>
-
--------------
-### 동작
-![2024-01-1516 47 42-ezgif com-video-to-gif-converter](https://github.com/Jaden000/simple-vi-editor/assets/84056591/75ea0b78-a8c2-4d4c-b4af-3b7722d78ce6)
-
 
 </br>
 </br>
