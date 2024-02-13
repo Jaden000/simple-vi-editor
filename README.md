@@ -3,21 +3,11 @@ vi와 같은 terminal에서 사용하기 위한 개발자용 텍스트 에디터
 
 </br>
 
-### 주요 개발 조건
-1. C언어 이용
-2. 자료구조 이용
-3. 5MB 이상의 텍스트 파일 열기 가능
-4. makefile을 통한 compile
-5. 모든 OS에서 동작 가능 
-
-</br>
-
-### 실행 명령어
-makefile을 통해 compile한 후, 다음의 명령어로 실행한다. 
-```
-./vite
-//vi te(xt) (editor)
-```
+### 주요 조건
+1. 자료구조 이용
+2. 5MB 이상의 텍스트 파일 열기 가능
+3. makefile을 통한 compile
+4. 모든 OS에서 동작 가능 
 
 </br>
 
@@ -37,90 +27,22 @@ vi에 있는 기능 중 다음의 일부 기능만을 구현한다.
 </br>
 </br>
 
--------------
+# 실행 및 동작
+### 실행 명령어
+makefile을 통해 compile한 후, 다음의 명령어로 실행한다. 
+```
+./vite
+```
+
+</br>
+
 ### 동작
 ![2024-01-1516 47 42-ezgif com-video-to-gif-converter](https://github.com/Jaden000/simple-vi-editor/assets/84056591/75ea0b78-a8c2-4d4c-b4af-3b7722d78ce6)
 
-
 </br>
 </br>
 
----------------------
-
-이용한 자료구조 및 기능 구현에 대한 내용은 report.md에 기재되어있으며 주요 개발 조건 중 ③ (5MB 이상의 텍스트 파일 열기 가능), ⑤ (모든 OS에서 동작 가능)의 사항만 아래에 기재한다.
-
-
-### 5MB 이상의 텍스트 파일 열기 가능
-대용량의 파일을 신속히 읽어오기 위해 feof()와 fread()를 사용한다. 
-- main (일부 발췌)
-```
-if(fo != NULL){
-    total_linenum = 1;
-    char buffer[1024] = {0, };
-    while(feof(fo) == 0){
-        int count = fread(buffer, 1, sizeof(buffer), fo);
-        if(count > 0){
-            for(int i = 0; i < strlen(buffer); i++) {
-                head = InsertAtHead(head, buffer[i]);
-                if(buffer[i] == '\n') total_linenum++;
-            }
-            memset(buffer, 0, sizeof(buffer));
-        }
-    }
-}
-fclose(fo);
-```
-feof()를 사용하지 않고 buffer의 마지막을 인식하여 while문 빠져나오거나 buffer를 동적으로 선언(`char* data = (char*) malloc(sizeof(char) *  1024);`)한 경우, 대용량 파일 읽기에 많은 시간이 소요됐다.
-
-</br>
-
-### 모든 OS에서 동작 가능
-makefile에서 OS별 conditional compile하고 main에서 전처리기(ifdef)를 이용한다.
-
-- makefile
-```
-CC = gcc
-ifeq ($(OS), Windows_NT) //if OS is Windows
-    LIBS = -L. -lpdcurses
-else //if OS is MacOs or Linux
-    LIBS = -lncurses
-endif
-
-run: main.o linkedlist.o 
-	gcc -o vite main.o linkedlist.o $(LIBS)
-main.o: main.c
-	gcc -c main.c -o main.o 
-linkedlist.o: linkedlist.c
-	gcc -c linkedlist.c -o linkedlist.o
-clean:
-	rm -f *.o
-	rm *.o vite
-```
-
-curses.h 라이브러리는 Windows에서 `-pdcurses`로, MacOs와 Linux에서 `-lncurses`로 LIBS 매크로를 달리 갖는다.  makefile에서 조건문(ifeq)을 이용하여 운영체제별로 LIBS 매크로를 설정한다. Windows의 경우, pdcurses 라이브러리를 인식하지 못하는 문제를 해결하기 위해 로컬에 pdcurses 라이브러리를 두었고, LIB_DIRS 매크로를 `-L.`(로컬)로 정의했다.
-
-
-- main (일부 발췌)
-```
-#ifdef _WIN32
-    #include <stdio.h>
-    #include "curses.h"   
-    #include <string.h>
-    #include "linkedlist.h"
-#else
-    #include <stdio.h>
-    #include <curses.h>   
-    #include <string.h>
-    #include "linkedlist.h"
-#endif
-```
-
-</br>
-</br>
-
------------
-
-### 디렉토리 구조
+# 디렉토리 구조
 
 ```
 .
