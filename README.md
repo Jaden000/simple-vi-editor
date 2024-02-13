@@ -66,5 +66,5 @@ simple_vi_editor/
 └── libpdcurses.a
 ```
 `main.c` : 메인 코드  
-`mainpage.ejs`: 자료구조  
+`linkedlist.c`: 자료구조 정의
 `libpdcurses.a`: Windows에서의 pdcurses 라이브러리 인식 불가 문제 해결을 위함
