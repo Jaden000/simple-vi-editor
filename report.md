@@ -22,7 +22,7 @@
 
 # 최종 보고서
 
-<span style ="color: #808080">고급자료구조 visual text editor(vite) 만들기 과제</span>
+<span style ="color: #808080">자료구조 visual text editor(vite) 만들기</span>
 
 
 
@@ -54,7 +54,6 @@
 
 
 
-**<u>통계학과 20192084학번 박성은</u>**
 
 <div style='page-break-before:always'></div>
 
@@ -597,20 +596,75 @@ WINDOW *editor, *statusbar, *messagebar;
 
 #### 5. Makefile
 
-​	운영체제별로 conditional compile하기 위해 운영체제를 확인하여, 링크할 라이브러리를 정하는 LIBS 매크로를 다르게 설정하였다. Windows의 경우 	pdcurses 라이브러리를 인식하지 못하는 문제가 있어, 링크할 라이브러리를 로컬에 두어 해결했다. 다시 말해, pdcurses 라이브러리를 가져왔고 로컬	의 pdcurses 라이브러리를 인식할 수 있도록 LIB_DIRS 매크로에 로컬로 정의했다.
+​	모든 OS에서 동작가능해야 하므로 운영체제별로 conditional compile(과 동시에 main에서 전처리기를 이용)한다. 조건문(ifeq)을 통해 운영체제를 확인하여 링크할 라이브러리를 정하는 LIBS 매크로를 운영체제별로 설정한다. curses.h 라이브러리의  LIBS 매크로는 Windows에서 `-pdcurses`로, MacOs와 Linux에서 `-lncurses`로 달리 갖는다. 그런데 Windows의 경우 pdcurses 라이브러리를 인식하지 못하는 문제가 있어, 링크할 라이브러리를 로컬에 두어 해결했다. pdcurses 라이브러리를 가져와 로컬에 두었으므로 로컬의 pdcurses 라이브러리를 인식할 수 있도록 LIB_DIRS 매크로를 `-L.`(로컬)로 정의했다.
 
 |          |  Windows   |  Mac OS   |   Linux   |
 | :------: | :--------: | :-------: | :-------: |
 |   LIBS   | -lpdcurses | -lncurses | -lncurses |
 | LIB_DIRS |    -L.     |     x     |     x     |
 
+
+- makefile
 ```c
+CC = gcc
+
 ifeq ($(OS), Windows_NT) //if os is Windows
     LIBS = -L. -lpdcurses
 else //if os is macos or linux
     LIBS = -lncurses
 endif
+
+run: main.o linkedlist.o 
+	gcc -o vite main.o linkedlist.o $(LIBS)
+main.o: main.c
+	gcc -c main.c -o main.o 
+linkedlist.o: linkedlist.c
+	gcc -c linkedlist.c -o linkedlist.o
+clean:
+	rm -f *.o
+	rm *.o vite
 ```
+
+makefile의 OS별 conditional compile 외에도, main에서 전처리기(ifdef)를 사용한다.
+
+- main (일부 발췌)
+```
+#ifdef _WIN32
+    #include <stdio.h>
+    #include "curses.h"   
+    #include <string.h>
+    #include "linkedlist.h"
+#else
+    #include <stdio.h>
+    #include <curses.h>   
+    #include <string.h>
+    #include "linkedlist.h"
+#endif
+```
+
+
+
+#### 6. 5MB 이상의 텍스트 파일 열기 가능
+대용량의 파일을 신속히 읽어오기 위해 feof()와 fread()를 사용한다. 
+- main (일부 발췌)
+```
+if(fo != NULL){
+    total_linenum = 1;
+    char buffer[1024] = {0, };
+    while(feof(fo) == 0){
+        int count = fread(buffer, 1, sizeof(buffer), fo);
+        if(count > 0){
+            for(int i = 0; i < strlen(buffer); i++) {
+                head = InsertAtHead(head, buffer[i]);
+                if(buffer[i] == '\n') total_linenum++;
+            }
+            memset(buffer, 0, sizeof(buffer));
+        }
+    }
+}
+fclose(fo);
+```
+feof()를 사용하지 않고 buffer의 마지막을 인식하여 while문 빠져나오거나 buffer를 동적으로 선언(`char* data = (char*) malloc(sizeof(char) *  1024);`)한 경우, 대용량 파일 읽기에 많은 시간이 소요됐다.
 
 
 
