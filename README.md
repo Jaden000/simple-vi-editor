@@ -1,5 +1,5 @@
 # 개요
-vi와 같은 terminal에서 사용하기 위한 개발자용 텍스트 에디터를 개발한다. vi의 일부 기능만을 구현하므로 <u>**simplicity(간이) vi editor**</u>라 칭한다.
+vi와 같은 terminal에서 사용하기 위한 개발자용 텍스트 에디터를 개발한다. vi의 일부 기능만을 구현하므로 <u>**simple vi editor**</u>라 칭한다.
 
 </br>
 
