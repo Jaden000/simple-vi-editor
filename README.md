@@ -1,17 +1,28 @@
-# 개요
-vi와 같은 terminal에서 사용하기 위한 개발자용 텍스트 에디터를 개발한다. vi의 일부 기능만을 구현하므로 <u>**simple vi editor**</u>라 칭한다.
+# Simple-vi-Editor
+> vi(vim)와 같은 terminal에서 사용하기 위한 개발자용 텍스트 에디터
+
+# project stack
+- C
+
+# Project Result
+ ```bash
+ makefile
+ ./vite
+ ```
+![2024-01-1516 47 42-ezgif com-video-to-gif-converter](https://github.com/Jaden000/simple-vi-editor/assets/84056591/75ea0b78-a8c2-4d4c-b4af-3b7722d78ce6)
 
 </br>
 
-### 주요 조건
+# Description
+### Development condition
 1. 자료구조 이용
 2. 5MB 이상의 텍스트 파일 열기 가능
 3. makefile을 통한 compile
 4. 모든 OS에서 동작 가능 
 
-</br>
+<br>
 
-### 기능
+### Function
 vi에 있는 기능 중 다음의 일부 기능만을 구현한다. 
 
 |no.|기능 명| 내용|
@@ -24,25 +35,9 @@ vi에 있는 기능 중 다음의 일부 기능만을 구현한다.
 |6|저장|ctrl-s 키로 파일의 내용을 저장한다.|
 |7|나가기|ctrl-q 키로 나갈 수 있다. 저장과 연달아 이어지는 경우에만 동작하며 저장 없이 나가고자 하는 경우에는 ctrl-q를 연달아 눌러 나간다.|
 
-</br>
-</br>
+<br>
 
-# 실행 및 동작
-### 실행 명령어
-makefile을 통해 compile한 후, 다음의 명령어로 실행한다. 
-```
-./vite
-```
-
-</br>
-
-### 동작
-![2024-01-1516 47 42-ezgif com-video-to-gif-converter](https://github.com/Jaden000/simple-vi-editor/assets/84056591/75ea0b78-a8c2-4d4c-b4af-3b7722d78ce6)
-
-</br>
-</br>
-
-# 디렉토리 구조
+### Directory Structure
 
 ```
 .
